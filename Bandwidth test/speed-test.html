@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+</head>
+<body>    
+    <h3 id="h3"></h3>
+    <script src="jquery-1.11.3.min.js"></script>
+    <script src="jquery.bandwidth.js"></script>
+    <script>
+        $('h3')._speedTest({
+            fileSize: 390,
+            domId: "h3",
+            fileUrl: "http://a.hiphotos.baidu.com/image/pic/item/adaf2edda3cc7cd90df1ede83401213fb80e9127.jpg"
+        });
+    </script>
+</body>
+</html>
