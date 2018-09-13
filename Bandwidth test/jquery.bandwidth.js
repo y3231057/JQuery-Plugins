@@ -6,11 +6,19 @@
                 fileSize: null,
                 domId: null,
                 bgColor: null,
+                noSignalColor: null,
+                signalColor: null,
                 height: null
             }, options), duration, startTime, endTime, speedMbps;
 
             if (stest.height == 'null' || stest.height == "undefined") {
                 stest.height = 80;
+            }
+            if (stest.noSignalColor == 'null' || stest.noSignalColor == "undefined") {
+                stest.noSignalColor = "#494D50";
+            }
+            if (stest.signalColor == 'null' || stest.signalColor == "undefined") {
+                stest.signalColor = "#D1DEE8";
             }
             var proportion = stest.height / 80;
             startTime = (new Date()).getTime();
@@ -27,11 +35,11 @@
                     for (var i = 5; i > 0; i--) {
                         var height = (1 + i) * 10 * proportion;
                         var left = (i * 20 - 5) * proportion;
-                        var bgcolor = "#494D50";
+                        var bgcolor = stest.noSignalColor;
                         if ((i === 5 && speedMbps >= 40) || (i === 4 && speedMbps >= 20) ||
                         (i === 3 && speedMbps >= 10) || (i === 2 && speedMbps >= 5) ||
                         (i === 1 && speedMbps >= 2.5)) {
-                            bgcolor = "#D1DEE8";
+                            bgcolor = stest.signalColor;
                         }
                         control += "<label id=\"signal-" + i + "\" style=\"width:6px; height:"
                             + height + "px; position: absolute; background-color: " + bgcolor + "; left:"
