@@ -12,7 +12,7 @@
             }, options), duration, startTime, endTime, speedMbps;
 
             if (stest.height == 'null' || stest.height == "undefined") {
-                stest.height = 80;
+                stest.height = 36;
             }
             if (stest.noSignalColor == 'null' || stest.noSignalColor == "undefined") {
                 stest.noSignalColor = "#494D50";
@@ -20,7 +20,7 @@
             if (stest.signalColor == 'null' || stest.signalColor == "undefined") {
                 stest.signalColor = "#D1DEE8";
             }
-            var proportion = stest.height / 80;
+            var proportion = stest.height / 36;
             startTime = (new Date()).getTime();
             $.ajax({
                 url: stest.fileUrl + "?spdt=" + startTime,
@@ -29,47 +29,46 @@
                     endTime = (new Date()).getTime();
                     duration = (endTime - startTime) / 1000;
                     speedMbps = (stest.fileSize * 8 / duration / 1024).toFixed(2);
-                    var control = "<div id=\"signal-div\" style=\"position:relative; width:" + 140 * proportion +
-                        "px; height:" + 80 * proportion + "px; background-color: " + stest.bgColor + ";\" title=\""
+                    var control = "<div id=\"signal-div\" style=\"position:relative; width:" + 36 * proportion +
+                        "px; height:" + 36 * proportion + "px; background-color: " + stest.bgColor + ";\" title=\""
                         + speedMbps + "&nbsp; Mbps\">";
                     for (var i = 5; i > 0; i--) {
-                        var height = (1 + i) * 10 * proportion;
-                        var left = (i * 20 - 5) * proportion;
+                        var height = (i * 3 + 2) * proportion;
+                        var left = (i * 5 + 2) * proportion;
                         var bgcolor = stest.noSignalColor;
+                        var opacity = 0.5;
                         if ((i === 5 && speedMbps >= 40) || (i === 4 && speedMbps >= 20) ||
                         (i === 3 && speedMbps >= 10) || (i === 2 && speedMbps >= 5) ||
                         (i === 1 && speedMbps >= 2.5)) {
                             bgcolor = stest.signalColor;
+                            opacity = 1;
                         }
-                        control += "<label id=\"signal-" + i + "\" style=\"width:6px; height:"
-                            + height + "px; position: absolute; background-color: " + bgcolor + "; left:"
-                            + left + "px; bottom:0; margin:0; border-radius: 6px;\"></label>";
+                        control += "<label id=\"signal-" + i + "\" style=\"width:" + 2 * proportion + "px; height:"
+                            + height + "px; position: absolute; background-color: " + bgcolor + "; left:" + left + "px; bottom:"
+                            + 9 * proportion + "px; margin:0; border-radius: " + proportion + "px;opacity:" + opacity + ";\"></label>";
                     }
                     control += "</div>";
                     $("#" + stest.domId).html(control);
                 },
                 error: function (ex) {
-                    var errorHtml = "<div style=\"position:relative; width:" + 140 * proportion +
-                        "px; height:" + 80 * proportion + "px; background-color: " + stest.bgColor + ";\">";
-                    errorHtml += "<div style=\"width: " + 38 * proportion + "px;height: " + 38 * proportion +
-                        "px;position: absolute;background-color: #E4694F;z-index: 1;right: " + Math.round(14 * proportion) +
-                        "px;bottom: 0;border-radius: 100%;\">";
-                    errorHtml += "<label style=\"position: absolute;width: " + 32 * proportion + "px;height: " + 32 * proportion +
-                        "px;background-color: #0E0E0E;border-radius: 100%;left: " + Math.round(3 * proportion) + "px;top: " + Math.round(3 * proportion) +
-                        "px;text-align: center;line-height: " + 32 * proportion + "px;color: #E4694F;font-size: " + 30 * proportion + "px;\">!</label>";
+                    var errorHtml = "<div style=\"position:relative; width:" + 36 * proportion +
+                        "px; height:" + 36 * proportion + "px; background-color: " + stest.bgColor + ";\">";
+                    errorHtml += "<div style=\"width: " + 10.9 * proportion + "px;height: " + 10.9 * proportion +
+                        "px;position: absolute;background-color: #E4694F;z-index: 1;right: 0px;bottom: " + 9 * proportion + "px;border-radius: 100%;\">";
+                    errorHtml += "<label style=\"position: absolute;width: " + 9 * proportion + "px;height: " + 9 * proportion +
+                        "px;background-color: " + stest.bgColor + ";border-radius: 100%;left: " + Math.round(0.5 * proportion) + "px;top: " + Math.round(0.5 * proportion) +
+                        "px;text-align: center;line-height: " + 9 * proportion + "px;color: #E4694F;font-weight: normal;font-size: " + proportion + "px;\">!</label>";
                     errorHtml += "</div>";
                     for (var i = 0; i < 5; i++) {
-                        var custom = "bottom:0;";
-                        var backgroudColor = "#56626A";
-                        var left = (15 + i * 20) * proportion;
-                        var height = (20 + i * 10) * proportion;
+                        var custom = "bottom:" + 9 * proportion + "px;";
+                        var left = (i * 5 + 7) * proportion;
+                        var height = (i * 3 + 5) * proportion;
                         if (i === 4) {
-                            custom = "top: " + 20 * proportion + "px;";
-                            backgroudColor = "#494D50";
-                            height = 20 * proportion;
+                            custom = "top: " + 10 * proportion + "px;";
+                            height = 5 * proportion;
                         }
-                        errorHtml += "<label style=\"width:6px;height:" + height + "px;position: absolute;background-color: " +
-                            backgroudColor + ";left:" + left + "px;" + custom + "margin:0;border-radius: 6px;\"></label>";
+                        errorHtml += "<label style=\"width:" + 2 * proportion + "px;height:" + height + "px;position: absolute;background-color: " +
+                            stest.noSignalColor + ";left:" + left + "px;" + custom + "margin:0;border-radius: " + proportion + "px;\"></label>";
                     }
                     errorHtml += "</div>";
                     $("#" + stest.domId).html(errorHtml);
